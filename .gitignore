@@ -1,0 +1,12 @@
+*.code-workspace
+venv
+.env
+db.sqlite3
+*.log
+*.pot
+*.py[cod]
+*$py.class
+__pycache__
+.bak
+.save
+volume/
