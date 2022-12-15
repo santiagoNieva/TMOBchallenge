@@ -42,7 +42,7 @@ Disponibilizar el **Admin** de Django para poder configurar la aplicación.
 # Pasos a Seguir
 Clonar el repositorio y pararse en el directorio raiz.
 
-### CREACION DE ENTORNO:
+## CREACION DE ENTORNO:
 Yo utilizo la librería venv y Python version 3.8
 
 Pararse en el directorio clonado, crear el entorno activarlo e instalar las librerias
@@ -53,14 +53,14 @@ pip install -U pip
 pip install -r requirements.txt
 ```
 
-### BASE DE DATOS
+## BASE DE DATOS
 Para replicar la db de Mysql la forma mas fácil es a traves de docker con el siguiente comando de una sola línea. *Elegir la contraseña deseada*.
 
 ```
 docker run --name mysql-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -v $PWD/volume:/var/lib/mysql -d mysql
 ```
 
-### MEMCACHED
+## MEMCACHED
 
 Al igual que con la base de datos es para estos casos de prueba utilizar docker con el siguiente comando de una sola linea
 ```
@@ -69,7 +69,7 @@ docker run --name my-memcache -p 11211:11211 -d memcached memcached -m 64
 *Si queremos mas RAM modificamos el ultimo parametro (en Megabytes)*
 
 
-### VARIABLES DE ENTORNO
+## VARIABLES DE ENTORNO
 
 Por buenas prácticas yo utilizo la librería **python-dotenv**
 Las variables de entorno entonces pueden ser guardadas en:
@@ -78,7 +78,7 @@ Las variables de entorno entonces pueden ser guardadas en:
 - si utilizas Visual Code pueden guardarse en el workspace.
 
 Vamos a usar el del archivo .env
-### CREAR MODIFICAR ARCHIVO .env
+## CREAR MODIFICAR ARCHIVO .env
 crear un archivo .env en el directorio raiz con valores propios.
 
 ```
@@ -87,14 +87,26 @@ DJANGO_SECRET_KEY="$4k4wtf_7v557brq&0mjae)o1mn6cqwst99(pm!pq+iqx_^_72"
 ```
 * **Tener en cuenta que el password MYSQL_ROOT_PASSWORD debe ser el mismo que se uso para el comando del DOCKER usado mas arriba (*mypassword*).**
 
-### MIGRAR Y CREAR SUPERUSUARIO
+## MIGRAR Y CREAR SUPERUSUARIO
 En este paso debemos las migraciones para que se creen las tablas necesarias para Django y crear el superusuario para poder ingresar al administrador
 ```
 python manage.py migrate
 python manage.py createsuperuser
 ```
 
+----
+### URLS
+
+El panel de administracion se encuentra en /admin ("http://127.0.0.1:8000/admin")
+
+La vista para obtener las url es /get_url ("http://127.0.0.1:8000/get_url?key=nombredeclave")
 
 
 
+### EXTRA
 
+Escibí un comando para que en caso de que pase algo con el caché se puedan restaurar las key activas.
+
+```
+python manage.py restore_cache
+```
