@@ -11,8 +11,10 @@ Campos:
 - active (boolean)
 - updated_at (datetime)
 - created_at (datetime)
+
+
 Propertys:
-get_redirect(key)
+- get_redirect(key)
 
 Consideraciones:
 - created_at: representa la fecha y hora en que se creo por primera vez el registro.
@@ -58,6 +60,17 @@ Para replicar la db de Mysql la forma mas fácil es a traves de docker con el si
 docker run --name mysql-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -v $PWD/volume:/var/lib/mysql -d mysql
 ```
 
+### MEMCACHED
+
+Al igual que con la base de datos es para estos casos de prueba utilizar docker con el siguiente comando de una sola linea
+```
+docker run --name my-memcache -p 11211:11211 -d memcached memcached -m 64
+```
+*Si queremos mas RAM modificamos el ultimo parametro (en Megabytes)*
+
+
+### VARIABLES DE ENTORNO
+
 Por buenas prácticas yo utilizo la librería **python-dotenv**
 Las variables de entorno entonces pueden ser guardadas en:
 - el **sistema operativo**
@@ -72,7 +85,7 @@ crear un archivo .env en el directorio raiz con valores propios.
 MYSQL_ROOT_PASSWORD=mypassword
 DJANGO_SECRET_KEY="$4k4wtf_7v557brq&0mjae)o1mn6cqwst99(pm!pq+iqx_^_72"
 ```
-* **Tener en cuenta que el password MYSQL_ROOT_PASSWORD debe ser el mismo que se uso para el comando del DOCKER usado mas arriba (mypassword).**
+* **Tener en cuenta que el password MYSQL_ROOT_PASSWORD debe ser el mismo que se uso para el comando del DOCKER usado mas arriba (*mypassword*).**
 
 ### MIGRAR Y CREAR SUPERUSUARIO
 En este paso debemos las migraciones para que se creen las tablas necesarias para Django y crear el superusuario para poder ingresar al administrador

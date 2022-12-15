@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Redirection.apps.RedirectionConfig',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'TIMEOUT': None,
+    }
+}
 
 ROOT_URLCONF = 'TMOBchallenge.urls'
 
@@ -70,6 +79,34 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'TMOBchallenge.wsgi.application'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'custom_formatter': {
+            "format": (
+                u"%(asctime)s;[%(levelname)-8s];"
+                "(%(module)s.%(filename)s.%(funcName)s);%(message)s"
+            ),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'custom_formatter'
+        }
+    },
+    'loggers': {
+        'custom': {
+            'handlers': ['console',],
+            'level': 'INFO',
+        }
+    }
+}
 
 
 # Database
