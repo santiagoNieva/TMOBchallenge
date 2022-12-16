@@ -11,7 +11,6 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(
             "Se recorren todas las instancias. La demora varía por el tamaño de la tabla."))
-
         for instance in Redirect.objects.all():
             if instance.active:
                 cache.set(instance.key, instance.url)
