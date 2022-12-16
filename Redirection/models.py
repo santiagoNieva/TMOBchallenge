@@ -4,6 +4,8 @@ import logging
 logger = logging.getLogger('custom')
 
 # Create your models here.
+
+
 class Redirect(models.Model):
     key = models.CharField(max_length=255, unique=True)
     url = models.URLField(max_length=255)
@@ -15,10 +17,9 @@ class Redirect(models.Model):
         return f"{self.key} : {self.url}"
 
     @classmethod
-    def get_redirect(cls,key):
-        print("CLS:",cls)
+    def get_redirect(cls, key):
         # Obtengo la key del cache
-        url = cache.get(key,None)
+        url = cache.get(key, None)
         # Si obtengo un valor lo devuelvo
         if url:
             return url
@@ -32,6 +33,7 @@ class Redirect(models.Model):
                 return None
             else:
                 # Si llega a esto, significa que la instancia se encuentra activa, pero su valor no esta guardada en la caché. Hay que corregir.
-                logger.warning(f"La instancia con pk [{instance.pk}] con key: '{key}' se encontró activa pero no en el caché.")
+                logger.warning(
+                    f"La instancia con pk [{instance.pk}] con key: '{key}' se encontró activa pero no en el caché.")
                 cache.set(instance.key, instance.url)
                 return instance.url
